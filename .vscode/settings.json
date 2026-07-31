@@ -2,5 +2,9 @@
   "python.defaultInterpreterPath": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
   "python.testing.pytestEnabled": true,
   "python.testing.unittestEnabled": false,
-  "python.testing.pytestArgs": ["."]
+  "python.testing.pytestArgs": ["."],
+  "workbench.iconTheme": "material-icon-theme",
+  "cucumberautocomplete.steps": ["step_definitions/*.py", "test_*.py"],
+  "cucumberautocomplete.syncfeatures": "features/*.feature",
+  "cucumberautocomplete.strictGherkinCompletion": false
 }

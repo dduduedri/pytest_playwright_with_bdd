@@ -92,6 +92,33 @@ Option 2 - online viewer: open [trace.playwright.dev](https://trace.playwright.d
 drag-and-drop the `trace.zip` file onto the page (the file is processed locally in your
 browser and is not uploaded anywhere).
 
+### BDD scenarios (pytest-bdd)
+
+`pytest-bdd` runs Gherkin `.feature` files through pytest. In this project they live under
+`BDD/features/`, with step definitions in `BDD/test/`. Docs:
+
+- Setup: [BDD/INSTALL.md](BDD/INSTALL.md)
+- Run / approaches: [BDD/EXECUTION.md](BDD/EXECUTION.md)
+
+Two equivalent implementations of `orderTransaction.feature` show how to pass state
+between steps:
+
+| File | Approach |
+|------|----------|
+| `BDD/test/test_OrderBdd_test.py` | `shared_data` dict fixture |
+| `BDD/test/test_OrderBdd_testWithtargetFixtureSolution.py` | `target_fixture` (step return → pytest fixture) |
+
+Run **one** step file at a time (both bind the same feature):
+
+```bash
+pytest BDD/test/test_OrderBdd_test.py -s
+pytest BDD/test/test_OrderBdd_testWithtargetFixtureSolution.py -s
+pytest BDD/test/test_OrderBdd_test.py --gherkin-terminal-reporter -s
+```
+
+> `pytest-bdd` scenarios are ordinary pytest tests, so markers, `-n`, `--tracing`, and
+> `--html` all work on them as well.
+
 ### Run by partial name
 
 `-k` selects tests whose name matches an expression (substring match).

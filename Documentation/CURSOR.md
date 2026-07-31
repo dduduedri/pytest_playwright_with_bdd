@@ -14,6 +14,29 @@ A complete guide to set up and run this **pytest + Playwright** project inside t
 2. Search for **Python** (publisher: `ms-python.python`, by Microsoft) and install it.
    - This automatically includes the **Python Debugger** and **Test Explorer** integration.
 
+### Gherkin / Cucumber support for `.feature` files
+
+`pytest-bdd` is only a Python plugin - it does not change the editor. To get the cucumber
+file icon, syntax highlighting, and step-definition navigation, install these two
+extensions:
+
+```powershell
+cursor --install-extension PKief.material-icon-theme
+cursor --install-extension alexkrechik.cucumberautocomplete
+```
+
+| Extension | What it gives you |
+|-----------|-------------------|
+| **Material Icon Theme** (`PKief.material-icon-theme`) | The green cucumber icon on `.feature` files (Cursor's default Seti theme has no `.feature` mapping) |
+| **Cucumber (Gherkin) Full Support** (`alexkrechik.cucumberautocomplete`) | Gherkin syntax highlighting, step autocomplete, and Ctrl+Click from a step to its Python definition |
+
+Both are already configured in `.vscode/settings.json` (icon theme activated,
+`cucumberautocomplete.steps` pointing at the step-definition files). If the icon does not
+change immediately, run **Developer: Reload Window**.
+
+> These extensions apply to Cursor/VS Code only. PyCharm needs its own plugin - see the
+> IDE plugin section in [INSTALL.md](INSTALL.md).
+
 ## 3. Create and activate the virtual environment
 
 Open the integrated terminal (`` Ctrl + ` ``) and run:
@@ -48,14 +71,19 @@ playwright install
 
 ## 6. Test configuration (already set up)
 
-This repo ships a `.vscode/settings.json` that enables pytest discovery:
+This repo ships a `.vscode/settings.json` that enables pytest discovery and the Gherkin
+tooling:
 
 ```json
 {
   "python.defaultInterpreterPath": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
   "python.testing.pytestEnabled": true,
   "python.testing.unittestEnabled": false,
-  "python.testing.pytestArgs": ["."]
+  "python.testing.pytestArgs": ["."],
+  "workbench.iconTheme": "material-icon-theme",
+  "cucumberautocomplete.steps": ["step_definitions/*.py", "test_*.py"],
+  "cucumberautocomplete.syncfeatures": "features/*.feature",
+  "cucumberautocomplete.strictGherkinCompletion": false
 }
 ```
 
@@ -97,6 +125,9 @@ pytest -n 3
 # generate a self-contained HTML report (pytest-html)
 pytest --html=report.html --self-contained-html
 
+# run BDD scenarios with the Gherkin step reporter (pytest-bdd)
+pytest --gherkin-terminal-reporter
+
 # record a Playwright trace per test -> test-results/<test-name>/trace.zip
 pytest --tracing on
 
@@ -134,4 +165,6 @@ This project defines a **custom command-line option** in `conftest.py`:
 | `ModuleNotFoundError: playwright` | Activate the venv and run `pip install -r requirements.txt` |
 | Browser fails to launch | Run `playwright install` to download browser binaries |
 | Tests not discovered | Run **Python: Configure Tests** → pytest → root directory |
+| No cucumber icon on `.feature` files | Install the Material Icon Theme and set `workbench.iconTheme` to `material-icon-theme`, then **Reload Window** (installing `pytest-bdd` alone does not add editor icons) |
+| Ctrl+Click on a Gherkin step does nothing | Check that `cucumberautocomplete.steps` in `.vscode/settings.json` matches where your step definitions live |
 | PowerShell won't activate venv | Run the `Set-ExecutionPolicy RemoteSigned -Scope CurrentUser` command above |
