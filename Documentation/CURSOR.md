@@ -2,6 +2,8 @@
 
 A complete guide to set up and run this **pytest + Playwright** project inside the Cursor IDE.
 
+For the Anthropic **Claude Code** CLI and JetBrains plugin, see [CLAUDE_CODE_INSTALL.md](CLAUDE_CODE_INSTALL.md).
+
 ## 1. Prerequisites
 
 - **Python 3.9+** installed (`python --version`)

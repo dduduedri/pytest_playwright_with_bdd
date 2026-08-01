@@ -2,6 +2,12 @@
 
 First-time setup for the **pytest + Playwright** framework.
 
+Related IDE / tooling guides:
+
+- Cursor: [CURSOR.md](CURSOR.md)
+- Claude Code (CLI + PyCharm plugin): [CLAUDE_CODE_INSTALL.md](CLAUDE_CODE_INSTALL.md)
+- BDD: [BDD/INSTALL.md](../BDD/INSTALL.md) · [BDD/EXECUTION.md](../BDD/EXECUTION.md)
+
 ## Prerequisites
 
 - Python 3.9 or newer (`python --version`)
